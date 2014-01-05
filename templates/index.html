@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+  <head>
+    <title>CoolFriend | Entries</title>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script type=text/javascript src="{{url_for('static', filename='main.js') }}"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>CoolFriend</h1>
+      {% if not session.logged_in %}
+        <a href="{{ url_for('login') }}">Log in</a>
+      {% else %}
+        <a href="{{ url_for('logout') }}">Log out</a>
+      {% endif %}
+      {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+      {% endfor %}
+      {% if session.logged_in %}
+        <form action="{{ url_for('add_entry') }}" method="post" class="add-entry">
+          <dl>
+            <dt>Name:
+            <dd><input type="text" size="30" name="title">
+            <dt>Date:
+	    <dd><input type="text" size="30" name="date">
+	    <dt>Venue:
+	    <dd><input type="text" size="30" name="venue">
+            <dt>Genre:
+            <dd><input type="text" size="30" name="genre">           
+            <br>
+            <br>
+            <dd><input type="submit" class="btn btn-default" value="Share">
+          </dl>
+        </form>
+      {% endif %}
+      <br>
+      <ul class="entries">
+      {% for entry in entries %}
+        <li class="entry"><h2>{{ entry.title }}</h2><br>{{ entry.date }}<br>{{ entry.venue }}<br>{{ entry.genre }}
+      {% else %}
+        <em>No events have been listed yet!</em>
+      {% endfor %}
+      </ul>
+    </div>
+  </body>
+</html>
