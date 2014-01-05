@@ -37,11 +37,13 @@
       {% endif %}
       <br>
       <ul class="entries">
+      {% if session.logged_in %}
       {% for entry in entries %}
         <li class="entry"><h2>{{ entry.title }}</h2><br>{{ entry.date }}<br>{{ entry.venue }}<br>{{ entry.genre }}
       {% else %}
         <em>No events have been listed yet!</em>
       {% endfor %}
+      {% endif %}
       </ul>
     </div>
   </body>
